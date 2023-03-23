@@ -5,7 +5,7 @@ services:
         image: adguard/adguardhome:latest
         container_name: adguard
         hostname: adguard
-        user: 1000:1000 #put your docker used ID (UID) and group ID (GID) here!
+#        user: 1000:1000 #put your docker used ID (UID) and group ID (GID) here!
         domainname: local
         mac_address: 00:fa:c0:fa:c0:aa
         cap_add:
@@ -18,6 +18,8 @@ services:
 #            - 1.1.1.1
         environment:
             - TZ=$tzone # your TZ
+            - PUID=1000
+            - PGID=1000
         volumes:
             - ${app_data}/adguard/work:/opt/adguardhome/work
             - ${app_data}/adguard/conf:/opt/adguardhome/conf
