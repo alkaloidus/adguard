@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+
+    adguard:
+        image: adguard/adguardhome:latest
+        container_name: adguard
+        hostname: adguard
+        user: 1000:1000 #put your docker used ID (UID) and group ID (GID) here!
+        domainname: local
+        mac_address: 00:fa:c0:fa:c0:aa
+        cap_add:
+            - NET_ADMIN
+        networks:
+        macvlan_network:
+            ipv4_address: 10.10.10.50  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
+        dns:
+            - 10.10.10.1
+#            - 1.1.1.1
+        environment:
+            - TZ=$tzone # your TZ
+        volumes:
+            - ${app_data}/adguard/work:/opt/adguardhome/work
+            - ${app_data}/adguard/conf:/opt/adguardhome/conf
+#            - /volume1/docker/acme/config/<cert_path>:/opt/adguardhome/cert #this string is needed if you want to use ACME issued HTTPS cert
+        restart: unless-stopped
+    
+networks:
+  macvlan_network:
+    driver: macvlan
+    enable_ipv6: false
+    driver_opts:
+      parent: ens192
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
+          gateway: 10.10.10.1
+          ip_range: 10.10.10.48/28
