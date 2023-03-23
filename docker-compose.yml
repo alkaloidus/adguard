@@ -34,4 +34,4 @@ networks:
       config:
         - subnet: 10.10.10.0/24
         - gateway: 10.10.10.1
-        - ip_range: 10.10.10.48/29
+#        - ip_range: 10.10.10.48/29
