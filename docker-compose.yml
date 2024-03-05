@@ -69,6 +69,7 @@ networks:
     driver: ipvlan
     enable_ipv6: false
     driver_opts:
+      ipvlan_mode: l3
       parent: ens192
     ipam:
       config:
