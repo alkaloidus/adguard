@@ -11,9 +11,8 @@ services:
         cap_add:
             - NET_ADMIN
         networks:
-            - adguard-macvlan
-#          macvlan_network:
-#            ipv4_address: 10.10.10.50  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
+          macvlan_network:
+            ipv4_address: 10.10.10.50  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
         ports:
             - 53:53/tcp
             - 53:53/udp
@@ -35,6 +34,34 @@ services:
             - ${app_data}/adguard/conf:/opt/adguardhome/conf
 #            - /volume1/docker/acme/config/<cert_path>:/opt/adguardhome/cert #this string is needed if you want to use ACME issued HTTPS cert
         restart: unless-stopped
+
+    pihole:
+        container_name: pihole
+        image: pihole/pihole:latest
+#        ports:
+#            - 53:53/tcp
+#            - 53:53/udp
+#            - 67:67/udp
+#            - 80:80/tcp
+#            - 443:443/tcp
+        environment:
+            - TZ=$tzone
+# WEBPASSWORD: 'set a secure password here or it will be random'
+# Volumes store your data between container upgrades
+        volumes:
+            - ${app_data}/pihole/etc-pihole/:/etc/pihole/
+            - ${app_data}/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+# Recommended but not required (DHCP needs NET_ADMIN)
+#   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+        cap_add:
+            - NET_ADMIN
+        restart: always
+        networks:
+          macvlan_network:
+            ipv4_address: 10.10.10.51
+#        network_mode: host
+#        networks:
+#            - private
     
 networks:
   adguard-macvlan:
@@ -47,4 +74,4 @@ networks:
       config:
         - subnet: 10.10.10.0/24
           gateway: 10.10.10.1
-          ip_range: 10.10.10.50/32
+          ip_range: 10.10.10.48/28
