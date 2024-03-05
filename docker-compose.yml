@@ -64,8 +64,7 @@ services:
 #            - private
     
 networks:
-  adguard-macvlan:
-    name: adguard-macvlan
+  macvlan_network:
     driver: macvlan
     enable_ipv6: false
     driver_opts:
