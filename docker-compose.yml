@@ -11,8 +11,9 @@ services:
         cap_add:
             - NET_ADMIN
         networks:
-          macvlan_network:
-            ipv4_address: 10.10.10.50  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
+            - adguard-macvlan
+#          macvlan_network:
+#            ipv4_address: 10.10.10.50  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
         dns:
             - 10.10.10.1
             - 1.1.1.1
@@ -27,7 +28,8 @@ services:
         restart: unless-stopped
     
 networks:
-  macvlan_network:
+  adguard-macvlan:
+    name: adguard-macvlan
     driver: macvlan
     enable_ipv6: false
     driver_opts:
@@ -36,4 +38,4 @@ networks:
       config:
         - subnet: 10.10.10.0/24
           gateway: 10.10.10.1
-#          ip_range: 10.10.10.48/29
+          ip_range: 10.10.10.50/32
