@@ -27,8 +27,8 @@ services:
             - ${dns2}
         environment:
             - TZ=$tzone # your TZ
-            - ${puid}=1000
-            - ${guid}=1000
+            - PUID=${puid}
+            - GUID=${guid}
         volumes:
             - ${app_data}/adguard/work:/opt/adguardhome/work
             - ${app_data}/adguard/conf:/opt/adguardhome/conf
