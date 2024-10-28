@@ -12,7 +12,7 @@ services:
             - NET_ADMIN
         networks:
           macvlan_network:
-            ipv4_address: 10.10.10.50  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
+            ipv4_address: ${ip}  #ip of your adguard container. I choose 192.168.1.8/29 subnet for my macvlans
         # ports:
         #     - 53:53/tcp
         #     - 53:53/udp
@@ -23,12 +23,12 @@ services:
         #     - 80:80/tcp
         #     - 443:443/tcp
         dns:
-            - 10.10.10.1
-            - 1.1.1.1
+            - ${dns1}
+            - ${dns2}
         environment:
             - TZ=$tzone # your TZ
-            - PUID=1000
-            - PGID=1000
+            - ${puid}=1000
+            - ${guid}=1000
         volumes:
             - ${app_data}/adguard/work:/opt/adguardhome/work
             - ${app_data}/adguard/conf:/opt/adguardhome/conf
@@ -58,7 +58,7 @@ services:
         restart: always
         networks:
           macvlan_network:
-            ipv4_address: 10.10.10.51
+            ipv4_address: ${ip2}
 #        network_mode: host
 #        networks:
 #            - private
@@ -69,9 +69,9 @@ networks:
     driver: macvlan
     enable_ipv6: false
     driver_opts:
-      parent: ens192
+      parent: ${int}
     ipam:
       config:
-        - subnet: 10.10.10.0/24
-          gateway: 10.10.10.1
-          ip_range: 10.10.10.48/28
+        - subnet: ${sub}
+          gateway: ${gate}
+          ip_range: ${range}
