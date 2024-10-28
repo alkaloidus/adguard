@@ -25,6 +25,7 @@ services:
         dns:
             - ${dns1}
             - ${dns2}
+        env_file: .env
         environment:
             - TZ=$tzone # your TZ
             - PUID=${puid}
@@ -44,6 +45,7 @@ services:
 #            - 67:67/udp
 #            - 80:80/tcp
 #            - 443:443/tcp
+        env_file: .env
         environment:
             - TZ=$tzone
 # WEBPASSWORD: 'set a secure password here or it will be random'
