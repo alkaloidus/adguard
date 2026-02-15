@@ -48,6 +48,8 @@ services:
         env_file: .env
         environment:
             - TZ=$tzone
+            - PUID=${puid}
+            - GUID=${guid}
 # WEBPASSWORD: 'set a secure password here or it will be random'
 # Volumes store your data between container upgrades
         volumes:
