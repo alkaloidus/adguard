@@ -47,8 +47,8 @@ services:
         env_file: .env
         environment:
             - TZ=$tzone
-            - PIHOLE_UID=${puid}
-            - PIHOLE_GID=${guid}
+            - PIHOLE_UID=0
+            - PIHOLE_GID=0
 # WEBPASSWORD: 'set a secure password here or it will be random'
 # Volumes store your data between container upgrades
         volumes:
