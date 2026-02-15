@@ -59,6 +59,8 @@ services:
 #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
         cap_add:
             - NET_ADMIN
+            - NET_RAW      # Add this - recommended for DNS
+            - SYS_NICE     # Add this - resolves the priority warning
         restart: always
         networks:
           macvlan_network:
