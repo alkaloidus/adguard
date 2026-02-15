@@ -47,13 +47,14 @@ services:
         env_file: .env
         environment:
             - TZ=$tzone
-            - PIHOLE_UID=0
-            - PIHOLE_GID=0
+            - PIHOLE_UID=${puid}
+            - PIHOLE_GID=${guid}
 # WEBPASSWORD: 'set a secure password here or it will be random'
 # Volumes store your data between container upgrades
         volumes:
-            - ${app_data}/pihole/etc-pihole/:/etc/pihole/
-            - ${app_data}/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
+            - pihole_data:/etc/pihole/
+#            - ${app_data}/pihole/etc-pihole/:/etc/pihole/
+#            - ${app_data}/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/
 # Recommended but not required (DHCP needs NET_ADMIN)
 #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
         cap_add:
@@ -68,6 +69,8 @@ services:
 #        networks:
 #            - private
 #Dont forget to turn on promiscuous mode on vSwitch    
+volumes:
+  pihole_data:
 networks:
   macvlan_network:
     name: macvlan_network
